@@ -1,6 +1,6 @@
 %Parâmetros de Sintonia
 
-N=50;
+N=10;
 lambda=10;
 
 %Numero de Amostras
@@ -42,16 +42,21 @@ G=T_N*P;
 uctrl=0;
 %Simulação da Plana ss2tf(A,B,C,0)
 for k=1:Amostras
-    if(k-2)>0
-        ym(k) = 1.7235*ym(k-1) -0.7403*ym(k-2) + 0.0136*uctrl(k-1) +0.0123*uctrl(k-2);
+    if(k-3)>0
+        ym(k) = 0.553*ym(k-1) -0.07484*ym(k-2) +0.002479*ym(k-3) + 0.9455*uctrl(k-1) -0.4237*uctrl(k-2) - 0.08899*uctrl(k-3);
         x(:,k+1)=A*x(:,k)+B*uctrl(k);
     else
-        if(k-1)>0
-            ym(k)=1.7235*ym(k-1)+ 0.0136*uctrl(k-1);
+        if(k-2)>0
+            ym(k)=0.553*ym(k-1) -0.07484*ym(k-2) + 0.9455*uctrl(k-1) -0.4237*uctrl(k-2);
             x(:,k+1)=A*x(:,k)+B*uctrl(k);
         else
-            ym(k)=0;
-            x(:,k+1)=A*x(:,k)+B*0;
+            if(k-1)>0
+                ym(k)=0.553*ym(k-1) + 0.9455*uctrl(k-1);
+                x(:,k+1)=A*x(:,k)+B*uctrl(k);
+            else
+                ym(k)=0;
+                x(:,k+1)=A*x(:,k)+B*0;
+            end
         end
     end
     
