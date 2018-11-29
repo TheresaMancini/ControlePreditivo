@@ -41,7 +41,7 @@ T_N=tril(ones(N,N));
 %Calculo da Resposta Forçada
 G=T_N*P;
 
-x=[15; 15];
+x=[0; 0];
 uctrl=0;
 %Simulação da Plana ss2tf(A,B,C,0)
 for k=1:Amostras
@@ -53,7 +53,7 @@ for k=1:Amostras
             ym(k)=1.9354*ym(k-1)+ 0.00238*uctrl(k-1);
             x(:,k+1)=A*x(:,k)+B*uctrl(k);
         else
-            ym(k)=15;
+            ym(k)=0;
             x(:,k+1)=A*x(:,k)+B*0;
         end
     end
